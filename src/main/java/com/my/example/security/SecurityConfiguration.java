@@ -5,9 +5,8 @@ import com.my.example.service.PagesService;
 import com.my.example.service.UserDetailsServiceImpl;
 import com.my.example.web.dto.AdminUserRoleDto;
 import com.my.example.web.dto.PageDto;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,7 +15,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,31 +25,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 //@ComponentScan("com.my.example")
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Slf4j
 public class SecurityConfiguration{
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    private AdminUserRoleService adminUserRoleService;
-
-    @Autowired
-    private PagesService pagesService;
-    @Autowired
-    private SecurityAccessDeniedHandler accessDeniedHandler;
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
-    @Autowired
-    private SecurityAuthenticationEntryPoint authenticationEntryPoint;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final AdminUserRoleService adminUserRoleService;
+    private final PagesService pagesService;
+    private final SecurityAccessDeniedHandler accessDeniedHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final SecurityAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public AuthenticationManager getAuthenticationManager(HttpSecurity http) throws Exception{

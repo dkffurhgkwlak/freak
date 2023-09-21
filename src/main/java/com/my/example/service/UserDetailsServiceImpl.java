@@ -1,13 +1,11 @@
 package com.my.example.service;
 
 import com.my.example.domain.AdminUser;
-import com.my.example.domain.EmailContents;
 import com.my.example.domain.repo.AdminUserRepository;
-import com.my.example.exception.NotFoundException;
 import com.my.example.web.dto.AdminUserDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,21 +16,14 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private AdminUserRepository repository;
-
-    @Autowired
-    public UserDetailsServiceImpl(AdminUserRepository repository) {
-        this.repository = repository;
-    }
+    private final AdminUserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AdminUser adminUser = findByUid(username);
-        if(null==adminUser){
-            throw new UsernameNotFoundException("user not found");
-        }
         return adminUser;
     }
 
@@ -41,7 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 Optional.ofNullable(repository.findById(id)
                         .orElseThrow(() -> new UsernameNotFoundException("user not found")));
 
-        return user.get();
+        AdminUser adminUser = user.get();
+        return adminUser;
     }
 
     private AdminUser findByUid(String uid) throws UsernameNotFoundException{
@@ -49,7 +41,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 Optional.ofNullable(repository.findByUid(uid)
                         .orElseThrow(() -> new UsernameNotFoundException("user not found")));
 
-        return user.get();
+        AdminUser adminUser = user.get();
+        return adminUser;
     }
 
     public AdminUserDto login(String username) {

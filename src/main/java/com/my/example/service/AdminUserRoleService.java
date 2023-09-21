@@ -5,8 +5,8 @@ import com.my.example.domain.Page;
 import com.my.example.domain.repo.AdminUserRoleRepository;
 import com.my.example.domain.repo.PagesRepository;
 import com.my.example.web.dto.AdminUserRoleDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,12 +14,11 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class AdminUserRoleService  {
-    @Autowired
-    private AdminUserRoleRepository adminUserRoleRepository;
 
-    @Autowired
-    private PagesRepository pagesRepository;
+    private final AdminUserRoleRepository adminUserRoleRepository;
+    private final PagesRepository pagesRepository;
 
     public AdminUserRoleDto getAdminUserRoleAndPages(String name){
         AdminUserRole adminUserRole = adminUserRoleRepository.findByName(name);

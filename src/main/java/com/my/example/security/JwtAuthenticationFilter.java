@@ -2,9 +2,11 @@ package com.my.example.security;
 
 import com.my.example.exception.JwtAuthenticationException;
 import com.my.example.service.AdminUserRoleService;
+import com.my.example.service.UserDetailsServiceImpl;
 import com.my.example.web.dto.AdminUserRoleDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
@@ -20,10 +22,10 @@ import java.util.ArrayList;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

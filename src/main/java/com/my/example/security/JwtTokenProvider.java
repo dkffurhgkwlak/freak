@@ -6,8 +6,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
@@ -28,21 +25,10 @@ public class JwtTokenProvider {
     public static final String JWT_AUDIENCE_AUTH_URI = "/auth";
     public static final String JWT_AUDIENCE_AUTH_TOKEN = "authToken";
     public static final String JWT_AUDIENCE_LOGIN_TOKEN = "loginToken";
-
-    private UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    public JwtTokenProvider(UserDetailsServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
     static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
     private final long tokenOriginMillisecond = 1000L * 60 * 60;
-
-    private final long tokenFirstMillisecond = 1000L * 60 * 60;
-
     static final String PREFIX = "Bearer";
+    private final UserDetailsServiceImpl userDetailsService;
 
     public String generateToken(String subject, String audience, List<String> roles) {
 

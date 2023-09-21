@@ -6,6 +6,7 @@ import com.my.example.exception.ApiException;
 import com.my.example.service.UserDetailsServiceImpl;
 import com.my.example.web.dto.AdminUserDto;
 import com.my.example.web.dto.LoginDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -16,15 +17,11 @@ import org.springframework.stereotype.Component;
 
 
 @Component
+@RequiredArgsConstructor
 public class AdminUserAuthenticationProvider implements AuthenticationProvider {
 
-    private UserDetailsServiceImpl userDetailsService;
-    private PasswordEncoder passwordEncoder;
-
-    public AdminUserAuthenticationProvider(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
-    }
+    private final UserDetailsServiceImpl userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

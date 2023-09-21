@@ -3,9 +3,9 @@ package com.my.example.service;
 import com.my.example.domain.EmailContents;
 import com.my.example.domain.SessionSave;
 import com.my.example.domain.repo.SessionSaveRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -13,12 +13,10 @@ import java.io.UnsupportedEncodingException;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class AuthOTPService {
-    @Autowired
-    private SessionSaveRepository sessionSaveRepository;
-
-    @Autowired
-    private EmailSenderService emailSenderService;
+    private final SessionSaveRepository sessionSaveRepository;
+    private final EmailSenderService emailSenderService;
 
     public String createOTP(){
         return RandomStringUtils.randomNumeric(4);

@@ -5,7 +5,6 @@ import com.my.example.domain.repo.EmailContentsRepository;
 import com.my.example.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -22,10 +21,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EmailSenderService {
 
-    @Autowired
-    private EmailContentsRepository emailContentsRepository;
+    private final EmailContentsRepository emailContentsRepository;
     private final JavaMailSender javaMailSender;
-
     private static final String fromEmail = "dnluvletter@gmail.com";
 
     public EmailContents findByName(String name) {
